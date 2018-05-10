@@ -1,25 +1,36 @@
 package com.example.cecil.database2;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.Date;
 
 
@@ -32,8 +43,14 @@ import java.util.Date;
 
 public class AddMadFragment extends Fragment {
     private EditText HF12, HF3, HF4, fedt, Id;
-    private Button BnSave, BnDate;
+    private Button BnSave, BnDate, BnKamera;
     private TextView Dato;
+    private ImageView imageView;
+
+
+    private static final int CAMERA_PIC_REQUEST = 1337;
+
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -54,8 +71,8 @@ public class AddMadFragment extends Fragment {
         BnSave = (Button) view.findViewById(R.id.bn_save_mad);
         BnDate = (Button) view.findViewById(R.id.bn_date);
         Dato = (TextView) view.findViewById(R.id.date);
-        Dato.setText("Hello, World!");
-
+        Dato.setText("");
+        BnKamera = (Button) view.findViewById(R.id.bn_kamera);
 
 
         BnSave.setOnClickListener(new View.OnClickListener() {
@@ -97,9 +114,59 @@ public class AddMadFragment extends Fragment {
             }
         });
 
+
+
+        BnKamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (ContextCompat.checkSelfPermission(getContext(),
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+
+                    if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)
+                            getContext(), Manifest.permission.CAMERA)) {
+                        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, CAMERA_PIC_REQUEST);
+
+                    } else {
+                        ActivityCompat.requestPermissions((Activity) getContext(),
+                                new String[]{Manifest.permission.CAMERA},
+                                1);
+                    }
+
+                }else{
+                    Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, CAMERA_PIC_REQUEST);
+                }
+            }
+
+
+        });
+
+
+
+
+
         return view;
 
+
+
+
 }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_PIC_REQUEST) {
+             //super.onActivityResult(requestCode, resultCode, data);
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            ImageView imageView = (ImageView) getActivity().findViewById(R.id.imageView);
+            imageView.setImageBitmap(bitmap);
+        }
+
+    }
+
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -136,8 +203,14 @@ public class AddMadFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+
 }
