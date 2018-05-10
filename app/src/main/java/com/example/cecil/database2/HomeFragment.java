@@ -1,6 +1,7 @@
 package com.example.cecil.database2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         BnLogud = view.findViewById(R.id.bn_logud);
         BnLogud.setOnClickListener(this);
 
-        BnInfo = view.findViewById(R.id.bn_info);
+        BnInfo = (Button) view.findViewById(R.id.bn_info);
         BnInfo.setOnClickListener(this);
         return view;
     }
@@ -98,9 +99,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.bn_info:
-                MainActivity.fragmentManager.beginTransaction().replace(R.id.fragment_container, new HomeFragment()).
-                        addToBackStack(null).commit();
+                Intent intent = new Intent(getActivity(), Info.class);
+                startActivity(intent);
                 break;
+
         }
 
     }

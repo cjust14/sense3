@@ -19,6 +19,9 @@ public interface MyDao
     @Query("select * from madkasse")
     public List<Mad> getMad();
 
+    @Query("SELECT * FROM madkasse WHERE dato = :inputDato")
+    public Mad getMadFromDate(String inputDato);
+
     @Update
     public void updateMad(Mad mad);
 

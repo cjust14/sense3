@@ -31,9 +31,9 @@ import java.util.Date;
  */
 
 public class AddMadFragment extends Fragment {
-    private EditText HF12, HF3, HF4, fedt;
+    private EditText HF12, HF3, HF4, fedt, Id;
     private Button BnSave, BnDate;
-    private TextView Date;
+    private TextView Dato;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,20 +46,24 @@ public class AddMadFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_mad, container, false);
+        //Id = view.findViewById(R.id.txt_mad_id);
         HF12 = (EditText) view.findViewById(R.id.txt_HF12);
         HF3 = (EditText) view.findViewById(R.id.txt_HF3);
         HF4 = (EditText) view.findViewById(R.id.txt_HF4);
         fedt = (EditText) view.findViewById(R.id.txt_fedt);
         BnSave = (Button) view.findViewById(R.id.bn_save_mad);
         BnDate = (Button) view.findViewById(R.id.bn_date);
-        Date = (TextView) view.findViewById(R.id.date);
+        Dato = (TextView) view.findViewById(R.id.date);
+        Dato.setText("Hello, World!");
+
 
 
         BnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String date = Date.getText().toString();
+                //if date not chosen, warn user with textbox
+                String datoString = Dato.getText().toString();
                 String hf12 = HF12.getText().toString();
                 String hf3 = HF3.getText().toString();
                 String hf4 = HF4.getText().toString();
@@ -71,7 +75,7 @@ public class AddMadFragment extends Fragment {
                 mad.setHF3(hf3);
                 mad.setHF4(hf4);
                 mad.setFedt(Fedt);
-                mad.setDate(date);
+                mad.setDato(datoString);
 
                 MainActivity.myAppDatabase.myDao().addMad(mad);
                 Toast.makeText(getActivity(), "Måltid tilføjet til madkassen", Toast.LENGTH_SHORT).show();
@@ -80,7 +84,7 @@ public class AddMadFragment extends Fragment {
                 HF3.setText("");
                 HF4.setText("");
                 fedt.setText("");
-                Date.setText("");
+                //Date.setText("");
             }
         });
 
@@ -96,9 +100,6 @@ public class AddMadFragment extends Fragment {
         return view;
 
 }
-
-
-
 
 
     // TODO: Rename method, update argument and hook method into UI event

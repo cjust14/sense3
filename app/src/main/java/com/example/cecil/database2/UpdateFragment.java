@@ -25,7 +25,7 @@ public class UpdateFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private EditText HF12, HF3, HF4, Fedt;
     private TextView Date;
-    private Button BnUpdate;
+    private Button BnUpdate, BnReadDate;
 
     public UpdateFragment() {
         // Required empty public constructor
@@ -37,31 +37,50 @@ public class UpdateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update, container, false);
-        Date = view.findViewById(R.id.date);
+        Date = view.findViewById(R.id.txt_date);
         HF12 = view.findViewById(R.id.txt_HF12);
         HF3 = view.findViewById(R.id.txt_HF3);
         HF4 = view.findViewById(R.id.txt_HF4);
         Fedt = view.findViewById(R.id.txt_fedt);
         BnUpdate = view.findViewById(R.id.bn_update_mad);
+        BnReadDate = view.findViewById(R.id.bn_read_date);
+
+        BnReadDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String dato = Date.getText().toString();
+
+                Mad mad = new Mad();
+
+                mad = MainActivity.myAppDatabase.myDao().getMadFromDate(dato);
+
+                HF12.setText(mad.getHF12());
+                HF3.setText(mad.getHF3());
+                HF4.setText(mad.getHF4());
+                Fedt.setText(mad.getFedt());
+
+                Toast.makeText(getActivity(),"Loaded!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         BnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String date = Date.getText().toString();
-                String hf12 = HF12.getText().toString();
-                String hf3 = HF3.getText().toString();
-                String hf4 = HF4.getText().toString();
-                String fedt = Fedt.getText().toString();
 
                 Mad mad = new Mad();
-                mad.setHF12(hf12);
-                mad.setHF3(hf3);
-                mad.setHF4(hf4);
-                mad.setFedt(fedt);
-                mad.setDate(date);
+                //set the id of the object were saving, to the id from the object we loaded
+                mad.setId(MainActivity.myAppDatabase.myDao().getMadFromDate(Date.getText().toString()).getId());
+                mad.setHF12(HF12.getText().toString());
+                mad.setHF3(HF3.getText().toString());
+                mad.setHF4(HF4.getText().toString());
+                mad.setFedt(Fedt.getText().toString());
+                mad.setDato(Date.getText().toString());
 
                 MainActivity.myAppDatabase.myDao().updateMad(mad);
                 Toast.makeText(getActivity(),"Opdateret!", Toast.LENGTH_SHORT).show();
+
+
 
                 Date.setText("");
                 HF12.setText("");

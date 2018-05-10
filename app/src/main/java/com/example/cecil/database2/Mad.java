@@ -18,8 +18,11 @@ import java.util.Date;
 @Entity(tableName= "madkasse")
 public class Mad
 {
-    @PrimaryKey @NonNull
-    private String date;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "Dato")
+    private String Dato;
 
     @ColumnInfo(name = "HF_12")
     private String HF12;
@@ -33,19 +36,26 @@ public class Mad
     @ColumnInfo (name = "fedt")
     private String fedt;
 
-    public String getDate() { return date;
+
+    public String getDato() {
+        return Dato;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDato(String dato) {
+        Dato = dato;
     }
 
-
-    public String getHF12() { return HF12;
+    public int getId() {
+        return id;
     }
 
-    public void setHF12(String HF12) { this.HF12 = HF12;
+    public void setId(int id) {
+        this.id = id;
     }
+
+    public String getHF12() { return HF12;}
+
+    public void setHF12(String HF12) { this.HF12 = HF12;}
 
     public String getHF3() {
         return HF3;

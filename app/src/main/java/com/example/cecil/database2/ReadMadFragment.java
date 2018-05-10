@@ -45,9 +45,15 @@ public class ReadMadFragment extends Fragment {
             String hf3 = mk.getHF3();
             String hf4 = mk.getHF4();
             String Fedt = mk.getFedt();
-            Long date = mk.getDate();
+            int id = mk.getId();
+            String dato = mk.getDato();
 
-            info = info+"\n\n"+"Date : "+date+"\n HF1+2 : "+hf12+"\n"+"HF3 : "+hf3 +"\n"+"HF4 : "+hf4 +"\n"+"1-3 spsk. fedt : "+Fedt;
+            info = info+"\n\n"+"id : "+id+"\n"
+                    +"HF1+2 :"+hf12+"\n"
+                    +"HF3 : "+hf3 +"\n"
+                    +"HF4 : "+hf4 +"\n"
+                    +"1-3 spsk. fedt : "+Fedt +"\n"
+                    +"Dato : " +dato;
         }
         TxtInfo.setText(info);
         return view;
