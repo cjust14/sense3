@@ -7,6 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
+import android.widget.ImageView;
 
 import java.util.Date;
 
@@ -36,6 +37,16 @@ public class Mad
     @ColumnInfo (name = "fedt")
     private String fedt;
 
+    @ColumnInfo (typeAffinity = ColumnInfo.BLOB)
+    private byte[] foto;
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
 
     public String getDato() {
         return Dato;

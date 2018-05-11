@@ -3,6 +3,7 @@ package com.example.cecil.database2;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ public class UpdateFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private EditText HF12, HF3, HF4, Fedt;
     private TextView Date;
-    private Button BnUpdate, BnReadDate;
+    private Button BnUpdate, BnReadDate, BnDate;
 
     public UpdateFragment() {
         // Required empty public constructor
@@ -37,17 +38,40 @@ public class UpdateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update, container, false);
-        Date = view.findViewById(R.id.txt_date);
+        Date = view.findViewById(R.id.date);
         HF12 = view.findViewById(R.id.txt_HF12);
         HF3 = view.findViewById(R.id.txt_HF3);
         HF4 = view.findViewById(R.id.txt_HF4);
         Fedt = view.findViewById(R.id.txt_fedt);
         BnUpdate = view.findViewById(R.id.bn_update_mad);
         BnReadDate = view.findViewById(R.id.bn_read_date);
+        BnDate = view.findViewById(R.id.bn_date);
+
+
+        HF12.setVisibility(View.INVISIBLE);
+        HF3.setVisibility(View.INVISIBLE);
+        HF4.setVisibility(View.INVISIBLE);
+        Fedt.setVisibility(View.INVISIBLE);
+
+
+        BnDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment dFragment = new DatePickerFragment();
+
+                dFragment.show(getFragmentManager(), "Date Picker");
+            }
+        });
 
         BnReadDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                HF12.setVisibility(View.VISIBLE);
+                HF3.setVisibility(View.VISIBLE);
+                HF4.setVisibility(View.VISIBLE);
+                Fedt.setVisibility(View.VISIBLE);
+
 
                 String dato = Date.getText().toString();
 
@@ -89,6 +113,9 @@ public class UpdateFragment extends Fragment {
                 Fedt.setText("");
             }
         });
+
+
+
 
         return view;
     }

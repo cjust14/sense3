@@ -3,10 +3,12 @@ package com.example.cecil.database2;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 public class ReadMadFragment extends Fragment {
     private TextView TxtInfo;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,6 +59,11 @@ public class ReadMadFragment extends Fragment {
                     +"Dato : " +dato;
         }
         TxtInfo.setText(info);
+
+
+
+
+
         return view;
     }
 

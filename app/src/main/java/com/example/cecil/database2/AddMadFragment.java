@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Date;
 
@@ -73,6 +75,7 @@ public class AddMadFragment extends Fragment {
         Dato = (TextView) view.findViewById(R.id.date);
         Dato.setText("");
         BnKamera = (Button) view.findViewById(R.id.bn_kamera);
+        imageView = (ImageView) view.findViewById(R.id.img_imageView);
 
 
         BnSave.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +97,15 @@ public class AddMadFragment extends Fragment {
                 mad.setFedt(Fedt);
                 mad.setDato(datoString);
 
+
+                /*imageView.setDrawingCacheEnabled(true);
+                imageView.buildDrawingCache();
+                Bitmap bitmap = imageView.getDrawingCache();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 200, baos);
+                byte[] data = baos.toByteArray();
+                mad.setFoto(data);*/
+
                 MainActivity.myAppDatabase.myDao().addMad(mad);
                 Toast.makeText(getActivity(), "Måltid tilføjet til madkassen", Toast.LENGTH_SHORT).show();
 
@@ -102,6 +114,9 @@ public class AddMadFragment extends Fragment {
                 HF4.setText("");
                 fedt.setText("");
                 //Date.setText("");
+
+
+
             }
         });
 
@@ -150,8 +165,6 @@ public class AddMadFragment extends Fragment {
         return view;
 
 
-
-
 }
 
 
@@ -161,12 +174,11 @@ public class AddMadFragment extends Fragment {
         if (requestCode == CAMERA_PIC_REQUEST) {
              //super.onActivityResult(requestCode, resultCode, data);
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            ImageView imageView = (ImageView) getActivity().findViewById(R.id.imageView);
+            ImageView imageView = (ImageView) getActivity().findViewById(R.id.img_imageView);
             imageView.setImageBitmap(bitmap);
         }
 
     }
-
 
 
     // TODO: Rename method, update argument and hook method into UI event
